@@ -1,0 +1,55 @@
+1. Update Ubuntu and Install Required Packages:
+sudo apt update && sudo apt upgrade -y
+sudo apt install python3 python3-pip -y
+pip3 install cryptography pandas faker
+python3 --version
+pip3 list | grep -E "cryptography|pandas|faker"
+2. AES Encryption & Decryption
+● AES (Advanced Encryption Standard) is a symmetric
+encryption algorithm.
+a. Generate an AES Key:
+● Create a Python script aes_key.py to generate the AES key:
+Terminal: touch aes_key.py && nano aes_key.py
+from cryptography.fernet import Fernet
+# Generate AES key
+key = Fernet.generate_key()
+# Save the key in a filewith open("aes_key.key", "wb") as key_file:
+key_file.write(key)
+print(f"Generated AES Key: {key.decode()}")
+● Run the script:
+python3 aes_key.py
+This will generate a key and save it in the aes_key.key file.
+b. Encrypt a Message:
+● Create a Python script aes_encrypt.py to encrypt a message:
+Terminal: touch aes_encrypt.py && nano aes_encrypt.py
+from cryptography.fernet import Fernet
+# Load AES key
+key = open("aes_key.key", "rb").read()
+cipher = Fernet(key)
+# Message to encrypt
+message = "Confidential Data: Do not share!"# Encrypt the message
+encrypted_message = cipher.encrypt(message.encode())
+print(f"Encrypted Message: {encrypted_message.decode()}")
+● Run the script:
+python3 aes_encrypt.py
+This will encrypt the message and print the encrypted result.
+c. Decrypt the Message:
+● Create a Python script aes_decrypt.py to decrypt the
+message:
+Terminal: touch aes_decrypt.py && nano aes_decrypt.py
+from cryptography.fernet import Fernet
+# Load AES key
+key = open("aes_key.key", "rb").read()
+cipher = Fernet(key)
+# Encrypted message (replace with actual encrypted message)encrypted_message = b”ENCRYPTED_MESSAGE_HERE” #
+Replace with your encrypted message
+# Decrypt the message
+decrypted_message = cipher.decrypt(encrypted_message).decode()
+print(f"Decrypted Message: {decrypted_message}")
+● Replace ENCRYPTED_MESSAGE_HERE with the actual encrypted
+message you got from aes_encrypt.py.
+● Run the script:
+python3 aes_decrypt.py
+This will decrypt the message and print the original message.
+NOTE: If indent error in aes_decrypt.py: sed -i '1s/^ //' aes_decrypt.py
+And check with: cat -A aes_decrypt.py
