@@ -1,4 +1,4 @@
-1. Update Ubuntu and Install Required Packages:
+1.Update Ubuntu and Install Required Packages:
 sudo apt update && sudo apt upgrade -y
 sudo apt install nmap -y
 2. Scan for Open Ports Using Nmap:
