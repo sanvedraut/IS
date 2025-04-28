@@ -1,0 +1,26 @@
+1. Mandatory Access Control (MAC)
+a) Create Files and Directories:
+1. Open a terminal and create a directory for testing MAC
+mechanisms:
+mkdir mac_demo && cd mac_demo
+2. Create a file named confidential.txt:
+touch confidential.txt
+b) Enable SELinux:
+1. Check if SELinux is enabled by running:
+getenforce
+2. If SELinux is not enabled, you can enable it by running:
+sudo setenforce 1
+c) Apply Security Context to a File:
+1. Verify the security context of the file using the ls -Z command:
+ls -Z confidential.txt
+d) Test Policy Enforcement:
+1. Simulate unauthorized access by trying to access the file through a
+user or process that lacks the required permissions. For example, you
+might attempt to cat the file as a non-root user:
+sudo cat confidential.txt
+2. Check the SELinux logs to verify that the event was logged:
+sudo cat /var/log/audit/audit.log
+e) Results:- SELinux will deny access to unauthorized processes or users and
+will log the event in the audit.log.
+- Unauthorized processes or users will be denied access even if they
+are the file owner.
