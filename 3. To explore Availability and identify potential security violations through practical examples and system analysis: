@@ -1,0 +1,35 @@
+1. Set Up a Simple Web Server (Optional)
+Linux:
+- Open a terminal and run:
+```bash
+python3 -m http.server 8080
+```
+Windows:
+- Set up a server using IIS or WAMP/XAMPP.
+2. Simulate Denial-of-Service (DoS) Attack
+Linux:
+1. Install Apache Benchmark (ab tool):
+```bash
+sudo apt update
+sudo apt install apache2-utils
+```
+2. Run the benchmark tool in a new terminal window:
+```bash
+ab -n 1000 -c 100 http://localhost:8080/
+```
+Windows:
+- Use PowerShell or JMeter to simulate the attack.
+3. Monitor Server BehaviorLinux:
+- Check the server logs or terminal for delays, errors, and timeouts.
+Windows:
+- Use Task Manager or Resource Monitor to observe CPU and
+network usage.
+4. Restore Normal Operations
+Linux:
+- Terminate the attack using Ctrl+C and test the server response with:
+```bash
+curl http://localhost:8080
+```
+Windows:
+- Stop or restart the server via IIS Manager, then verify server
+availability.
