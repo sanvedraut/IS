@@ -1,0 +1,15 @@
+1. Update Ubuntu and Install Required Packages:
+sudo apt update && sudo apt upgrade -y
+sudo apt install nmap -y
+2. Scan for Open Ports Using Nmap:
+● First, check for your system's IP address:
+ip a
+● Then, perform the port scan on the target IP (in this case,
+10.10.10.6):
+nmap -sV -p- 10.10.10.6 # Replace with your target IP address (e.g.,
+eth0)
+● The -sV option attempts to determine the version of the services
+running on open ports.
+● The -p- option tells Nmap to scan all ports.
+● NOTE: REMOVE /24 FROM IP ADDRESS, /24 MEANS ALL
+DEVICES.
