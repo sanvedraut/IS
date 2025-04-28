@@ -1,0 +1,40 @@
+1. Update Ubuntu and Install Required Packages:
+sudo apt update && sudo apt upgrade -y
+sudo apt install python3 python3-pip -y
+pip3 install cryptography pandas faker
+python3 --version
+pip3 list | grep -E "cryptography|pandas|faker"
+Install Faker Library:
+sudo apt install faker
+2. Masking Sensitive Data (Anonymization)
+a. Create a script to mask sensitive data, such as SSNs:
+Create a Python script mask.py to mask the SSN data:
+Terminal: touch mask.py && nano mask.py
+import pandas as pd
+# Data containing SSNs
+data = {"SSN": ["123-45-6789", "987-65-4321", "555-44-3333"]}
+df = pd.DataFrame(data)# Masking SSN (showing only the last 4 digits)
+df["Masked_SSN"] = df["SSN"].str.replace(r"\d{3}-\d{2}", "***-**-",
+regex=True)
+# Display the masked data
+print(df)
+● Run the script:
+python3 mask.py
+This will replace the first five digits of the SSN with ***-**-,
+effectively masking the sensitive information.
+NOTE: if pandas(I’ll fucking kms) not working, put in terminal: sudo apt
+install python3-pandas
+3. Generating Fake Data Using Faker:
+Create another script generate_fake_data.py to generate fake
+data:
+Terminal: touch generate_fake_data.py && nano
+generate_fake_data.py
+from faker import Faker# Create a Faker instance
+fake = Faker()
+# Generate and print 5 fake records
+for _ in range(5):
+print(fake.name(), "-", fake.email(), "-", fake.phone_number())
+● Run the script:
+python3 generate_fake_data.py
+This will generate 5 fake records with random names, email
+addresses, and phone numbers.
