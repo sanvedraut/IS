@@ -1,4 +1,4 @@
-1. Update Ubuntu and Install Required Packages:
+1.Update Ubuntu and Install Required Packages:
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3 python3-pip -y
 pip3 install cryptography pandas faker
