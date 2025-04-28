@@ -1,0 +1,86 @@
+1. Update Ubuntu and Install Required Packages:
+sudo apt update && sudo apt upgrade -y
+sudo apt install python3 python3-pip -y
+pip3 install cryptography pandas faker
+python3 --version
+pip3 list | grep -E "cryptography|pandas|faker"
+2. RSA Encryption & Decryption
+a. Generate RSA Key Pair:
+Create a Python script rsa_key.py to generate the RSA key pair:
+Terminal: touch rsa_key.py && nano rsa_key.py
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+# Generate private key
+private_key = rsa.generate_private_key(
+public_exponent=65537,
+key_size=2048
+)# Save private key
+with open("rsa_private.pem", "wb") as f:
+f.write(private_key.private_bytes(
+encoding=serialization.Encoding.PEM,
+format=serialization.PrivateFormat.TraditionalOpenSSL,
+encryption_algorithm=serialization.NoEncryption()
+))
+# Generate public key
+public_key = private_key.public_key()
+# Save public key
+with open("rsa_public.pem", "wb") as f:
+f.write(public_key.public_bytes(
+encoding=serialization.Encoding.PEM,
+format=serialization.PublicFormat.SubjectPublicKeyInfo
+))
+print("RSA key pair generated and saved.")● Run the script:
+python3 rsa_key.py
+This will generate a private key rsa_private.pem and a public key
+rsa_public.pem.
+b. Encrypt Data Using RSA Public Key:
+Create a Python script rsa_encrypt.py to encrypt the message:
+Terminal: touch rsa_encrypt.py && nano rsa_encrypt.py
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+# Load the public key
+with open("rsa_public.pem", "rb") as f:
+public_key = serialization.load_pem_public_key(f.read())
+# The message to encrypt
+message = b"Secure Data Transfer"
+# Encrypt the message using RSA public keyencrypted = public_key.encrypt(
+message,
+padding.OAEP(
+mgf=padding.MGF1(algorithm=hashes.SHA256()), # <-- ()
+algorithm=hashes.SHA256(), # <-- ()
+label=None
+)
+)
+print(f"Encrypted Data: {encrypted}")
+● Run the script:
+python3 rsa_encrypt.py
+This will encrypt the message and print the encrypted result.
+c. Decrypt Data Using RSA Private Key:
+Create a Python script rsa_decrypt.py to decrypt the message:
+Terminal: touch rsa_decrypt.py && nano rsa_decrypt.py
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import hashesfrom cryptography.hazmat.primitives import serialization
+# Load the private key
+with open("rsa_private.pem", "rb") as f:
+private_key = serialization.load_pem_private_key(f.read(),
+password=None)
+# The encrypted message (replace with the result from
+rsa_encrypt.py)
+encrypted_message = b”ENCRYPTED_MESSAGE_HERE” #
+Replace with your encrypted message
+# Decrypt the message using RSA private key
+decrypted = private_key.decrypt(
+encrypted_message,
+padding.OAEP(
+mgf=padding.MGF1(algorithm=hashes.SHA256()), # <-- ADD ()
+!!!
+algorithm=hashes.SHA256(), # <-- ADD () !!!
+label=None
+)
+)print(f"Decrypted Data: {decrypted.decode()}")
+● Replace ENCRYPTED_MESSAGE_HERE with the actual encrypted
+message you got from rsa_encrypt.py.
+● Run the script:
+python3 rsa_decrypt.py
+This will decrypt the message and print the original message.
