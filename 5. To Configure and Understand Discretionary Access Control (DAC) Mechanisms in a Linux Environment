@@ -1,0 +1,34 @@
+1. Discretionary Access Control (DAC)
+a) Create Files and Directories:
+1. Open a terminal and create a directory for testing DAC
+mechanisms:
+mkdir dac_demo && cd dac_demo
+2. Create a file named confidential.txt within the directory:
+touch confidential.txt
+b) Set Permissions Using chmod:
+1. Use chmod to set permissions for the file. For example, restrict read
+and write access to the file for the owner only:
+chmod 600 confidential.txt
+- This makes the file readable and writable only by the file's owner.
+For WSL (Windows Subsystem for Linux), you can run:
+sudo chmod o-rx /home/username/dac_demo
+c) Change File Ownership Using chown:
+1. Add a new user (e.g., alice) and change the ownership of the file to
+that user:
+sudo adduser alice
+sudo chown alice:alice confidential.txt
+d) Log in as Alice:
+1. Switch to the user alice and try to read the confidential.txt file:
+su alice
+cat confidential.txtFor WSL, if su does not work, use:
+sudo -i -u alice
+sudo su - alice
+2. Verify that other users (such as the default user) cannot access the
+file:
+ls /home/atharv/dac_demo
+Output:
+ls: cannot access '/home/username/dac_demo': Permission denied
+e) Results:
+- Alice (the file owner) can access confidential.txt.
+- Other users (e.g., the default user) cannot read or write to the file
+due to the restrictive permissions (600).
